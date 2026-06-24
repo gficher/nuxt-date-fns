@@ -19,10 +19,10 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm i -g --force corepack@latest && corepack enable
+      - run: npm i -g --force corepack@latest && corepack enable && corepack prepare pnpm@10.13.1 --activate
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile --config.minimumReleaseAge=0 --config.strictDepBuilds=false
+        run: pnpm install --no-frozen-lockfile
 
       - name: Lint
         run: npm run lint
@@ -37,10 +37,10 @@ jobs:
         with:
           node-version: 20
 
-      - run: npm i -g --force corepack@latest && corepack enable
+      - run: npm i -g --force corepack@latest && corepack enable && corepack prepare pnpm@10.13.1 --activate
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile --config.minimumReleaseAge=0 --config.strictDepBuilds=false
+        run: pnpm install --no-frozen-lockfile
 
       - name: Playground prepare
         run: npm run dev:prepare
