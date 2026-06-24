@@ -99,9 +99,13 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (options.defaultLocale) {
-      addPluginTemplate({
-        filename: 'date-fns-plugin.mjs',
-        getContents: () => `
+      if (!/^\w+$/.test(options.defaultLocale)) {
+        console.error(`[nuxt-date-fns] Invalid defaultLocale provided: "${options.defaultLocale}". It must be a valid date-fns locale identifier.`)
+      }
+      else {
+        addPluginTemplate({
+          filename: 'date-fns-plugin.mjs',
+          getContents: () => `
 import { setDefaultOptions } from 'date-fns'
 import { ${options.defaultLocale} } from 'date-fns/locale'
 import { defineNuxtPlugin } from '#app'
@@ -109,8 +113,9 @@ import { defineNuxtPlugin } from '#app'
 export default defineNuxtPlugin(() => {
   setDefaultOptions({ locale: ${options.defaultLocale} })
 })
-        `,
-      })
+          `,
+        })
+      }
     }
   },
 })
